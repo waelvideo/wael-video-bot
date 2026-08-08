@@ -1,19 +1,24 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, ContextTypes, filters
+import os
 
-BOT_TOKEN = 
-8581634621:AAGCzoPt3VTsC-D9HaB4yr-P-H9zayRenX4
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    CallbackQueryHandler,
+    ContextTypes,
+    filters,
+)
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_USERNAME = "@w24symedad"
 
 
 async def is_subscribed(user_id, context):
     try:
-        member = await context.bot.get_chat_member(
-            CHANNEL_USERNAME,
-            user_id
-        )
+        member = await context.bot.get_chat_member(CHANNEL_USERNAME, user_id)
         return member.status in ["member", "administrator", "creator"]
-    except:
+    except Exception:
         return False
 
 
@@ -75,6 +80,9 @@ async def receive_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
+    if not BOT_TOKEN:
+        raise ValueError("BOT_TOKEN غير موجود في GitHub Secrets")
+
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
@@ -87,3 +95,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
