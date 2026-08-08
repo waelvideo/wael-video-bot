@@ -3,7 +3,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 
 BOT_TOKEN = 
 8581634621:AAGCzoPt3VTsC-D9HaB4yr-P-H9zayRenX4
-CHANNEL_USERNAME = "@w24symedad
+CHANNEL_USERNAME = "@w24symedad"
 
 
 async def is_subscribed(user_id, context):
